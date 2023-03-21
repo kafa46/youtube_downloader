@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CJU-Youtube Download</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    
+    <!-- 파비콘 시작 -->
+    <link rel="favicon" href="https://tube.acin.kr/static/imgs/favicon/favicon-cmsc.png">
+    <link rel="Shortcut icon" href="/static/imgs/favicon/cju-tube.png">
+    <link rel="icon" href="/static/imgs/favicon/cju-tube.png" type="image/png">
+    <link rel="apple-touch-icon" href="/static/imgs/favicon/cju-tube.png">
+
+    <!-- 사용자 정의 JavaScript -->
+    <script src="/static/js/check_downloadable.js"></script>
+    
+    <!-- 사용자 정의 CSS -->
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/spinner.css">
+    
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div class="shadow-lg px-3 pt-3 pb-1 my-5 bg-body-tertiary rounded">
+                    <p>유튜브 다운로드 페이지에 오신것을 환영합니다.</p>
+                    <p>청주대 ACIN 연구실에서는 광고, 바이러스가 전혀 없는 </p>
+                    <p>유튜브 다운로드 환경을 제공하고 있습니다.</p>
+                </div>
+                {% block contents %}
+                {% endblock %}
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+    <!-- <footer>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div class="alert alert-dark center" role="alert">
+                    주소 : (28806) 충청북도 청주시 청원구 대성로 298 융합관 ACIN 연구실<br>
+                    이메일: <a href="mailto:damhcw@naver.com">kafa46@gmail.com</a>
+                    <span style="font-size: 12px;">Copyright(c) All Rights Reserved by Dawool Systems</span>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+    </footer> -->
+</body>
+</html>

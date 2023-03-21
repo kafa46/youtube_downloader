@@ -1,0 +1,61 @@
+{% extends '/home/base.html' %}
+
+{% block contents %}
+
+<form action="{{ url_for('main.index') }}" method="post" class="post-form">
+  {{ csrf_token }}
+  <div class="row g-3 align-items-center mx-2">
+    <div class="col-auto">
+      <label for="url" class="col-form-label">유튜브 주소</label>
+    </div>
+    <div class="col-sm-6">
+      <input type="text" id="url" class="form-control" name="url" placeholder="유튜브 주소를 입력해 주세요">
+    </div>
+    <div class="col-auto">
+      <a class="btn btn-outline-primary" id="submit-btn"
+        data-url="{{ url_for('download.check_downloadable') }}">조회</a>
+      <a class="btn btn-outline-primary" id="clear-btn" onclick="clear_content()">내용 초기화</a>
+    </div>
+  </div>
+</form>
+
+<div class="loading" hidden></div>
+
+<div class="row my-3 mx-2">
+  <div class="col-sm-10">
+    <div class="row my-3 p-2 border border-dark rounded" id="tube-info-area" hidden>
+      <div class="row my-1">
+        <div class="col-sm-3">
+          <a href="" id="tumnail-link">
+            <img src="" alt="Youtube thumbnail" id="tube-thumbnail" width="100px">
+          </a>
+        </div>
+        <div class="col-sm-9" id="tube-title"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mb-5 mx-1" id="table-area" hidden>
+  <div><p style="color: red;">다운로드 파일 용량은 예측치 입니다. 다운로드가 완료된 이후 용량은 다를 수 있습니다.</p></div>
+  <div><p style="color: blue;">최적 용량/해상도 이외 옵션을 선택할 경우 서버 처리시간이 길어질 수 있습니다. </p></div>
+  <table class="table">
+    <thead>
+        <th>구분</th>
+        <td>타입</td>
+        <td>크기</td>
+        <td>해상도</td>
+        <td id="downloading" data-download-url="{{ url_for('download.downloading') }}">다운로드</td>
+    </thead>
+    <tbody id="video-list">
+    </tbody>
+  </table>
+</div>
+
+<div id="request-file" data-request-file="{{ url_for('download.request_file') }}" hidden></div>
+<a href="{{ url_for('download.request_file') }}" 
+  id="request-file-btn"
+  class="btn btn-outline-primary" hidden>다운로드</a>
+  
+{% endblock %}
