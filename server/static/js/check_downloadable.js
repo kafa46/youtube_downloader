@@ -98,8 +98,12 @@ function append_table_element(data){
             </td>
          <tr>`
     )
-    // 일반 선택 옵션 추가    
-    for(let x=0; x<data.length; x++){
+    // 일반 선택 옵션 추가 - 최대 5개만 보여주기
+    let video_max_list = 5;
+    if (video_max_list > data.length){
+        video_max_list = data.length;
+    }
+    for(let x=0; x<video_max_list; x++){
         // console.log(data[x])
         let data_type = '';
         let extention = 'mp4';
