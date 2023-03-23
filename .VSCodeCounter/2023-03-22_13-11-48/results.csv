@@ -1,0 +1,19 @@
+"filename", "language", "MagicPython", "pip requirements", "INI", "comment", "blank", "total"
+"/home/kafa46/workspace/flask_app/yotube_downloader/config.py", "MagicPython", 16, 0, 0, 0, 4, 20
+"/home/kafa46/workspace/flask_app/yotube_downloader/migrations/alembic.ini", "INI", 0, 0, 38, 0, 13, 51
+"/home/kafa46/workspace/flask_app/yotube_downloader/migrations/env.py", "MagicPython", 81, 0, 0, 0, 30, 111
+"/home/kafa46/workspace/flask_app/yotube_downloader/migrations/versions/c5ac1b409ec6_.py", "MagicPython", 24, 0, 0, 0, 9, 33
+"/home/kafa46/workspace/flask_app/yotube_downloader/request_analysis/demography.py", "MagicPython", 16, 0, 0, 0, 4, 20
+"/home/kafa46/workspace/flask_app/yotube_downloader/requirements.txt", "pip requirements", 0, 33, 0, 0, 1, 34
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/__init__.py", "MagicPython", 29, 0, 0, 0, 12, 41
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/filters.py", "MagicPython", 0, 0, 0, 0, 1, 1
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/forms.py", "MagicPython", 10, 0, 0, 0, 2, 12
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/models.py", "MagicPython", 4, 0, 0, 0, 1, 5
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/utils.py", "MagicPython", 4, 0, 0, 0, 1, 5
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/views/main_views.py", "MagicPython", 15, 0, 0, 0, 3, 18
+"/home/kafa46/workspace/flask_app/yotube_downloader/server/views/tube_download_views.py", "MagicPython", 94, 0, 0, 0, 21, 115
+"/home/kafa46/workspace/flask_app/yotube_downloader/tube_downloader/youtube_download.py", "MagicPython", 28, 0, 0, 0, 13, 41
+"/home/kafa46/workspace/flask_app/yotube_downloader/tube_downloader/yt_dl.py", "MagicPython", 150, 0, 0, 0, 25, 175
+"/home/kafa46/workspace/flask_app/yotube_downloader/uwsgi/wsgi.ini", "INI", 0, 0, 27, 0, 8, 35
+"/home/kafa46/workspace/flask_app/yotube_downloader/wsgi.py", "MagicPython", 4, 0, 0, 0, 2, 6
+"Total", "-", 475, 33, 65, 0, 150, 723

@@ -1,5 +1,6 @@
 import os
 import subprocess
+import re
 from flask import Blueprint, jsonify, render_template, redirect, send_file, url_for, request
 from pytube import YouTube
 from config import DOWNLOAD_PATH, FILE_TYPE
@@ -67,7 +68,20 @@ def downloading():
     audio_idx = m4a_audio.get('id')
     
     # 안전한 파일 이름으로 변경
-    video_title = video_title.replace(',', '_').replace('#', '_').replace(' ', '')
+    REG_REPLACE = {
+        (',', '_'),
+        ('#', '_'),
+        (' ', '_'),
+        ('/', '_'),
+        ('\\', '_'),
+        ('"', ''),
+        ("'", ''),
+    }
+    
+    for old, new in REG_REPLACE:
+        video_title = re.sub(old, new, video_title, flags=re.IGNORECASE)   
+    # video_title = video_title.replace(',', '_').replace('#', '_').replace(' ', '').replace('/', '_').replace('\\', '_').replace('"', '').replace("'", '')
+    # print(f'video_title: {video_title}')
     
     try:
         if file_type == 'optimal':

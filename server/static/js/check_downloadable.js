@@ -99,21 +99,26 @@ function append_table_element(data){
          <tr>`
     )
     // 일반 선택 옵션 추가 - 최대 5개만 보여주기
-    let video_max_list = 5;
+    let video_max_list = 3;
     if (video_max_list > data.length){
         video_max_list = data.length;
     }
-    for(let x=0; x<video_max_list; x++){
+    for(let x=0; x<data.length; x++){
         // console.log(data[x])
         let data_type = '';
         let extention = 'mp4';
         
         // let key = Object.keys(data[x])[0];
+        // console.log(x, video_max_list)
+        if (x > video_max_list && data[x].type === 'mp4'){
+            continue;
+        }
+
         if (data[x].type==='mp4'){
             data_type = '비디오';
         } else if (data[x].type==='m4a'){
             data_type = '오디오(MP4 음성만)';
-            extention = 'mp3'
+            extention = 'm4a'
         } else {
             data_type = '알수 없음';
         }
