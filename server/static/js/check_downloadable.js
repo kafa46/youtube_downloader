@@ -85,12 +85,12 @@ function append_table_element(data){
     }
     // 최적 동영상 다운로드
     // 최적 도영상 size 찾기 -> id == 22
-    let best_video_size = 0;
-    for (x=0; x<data.length; x++){
-        if (data[x]['files']['id'] == 22 ){
-            best_video_size = data[x]['files']['size_mb']
-        }
-    }
+    // let best_video_size = 0;
+    // for (x=0; x<data.length; x++){
+    //     if (data[x]['files']['id'] == 22 ){
+    //         best_video_size = data[x]['files']['size_mb']
+    //     }
+    // }
     $('#video-list').append(
         `<tr class="file-list">
             <th>비디오(최적)</th>
@@ -101,7 +101,7 @@ function append_table_element(data){
                 <a href="#"
                     id="mp3"
                     class="download-item btn btn-outline-primary"
-                    onclick="download_tube(${0}, ${22}, ${best_video_size}, ${type['optimal']})">받기</a>
+                    onclick="download_tube(${0}, ${22}, ${0}, ${type['optimal']})">받기</a>
             </td>
          <tr>`
     )
