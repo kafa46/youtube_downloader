@@ -57,7 +57,7 @@ def save_download_status(download_status: dict) -> bool:
     dt.yt_url = download_status.get('yt_url')
     dt.yt_title = download_status.get('yt_title')
     dt.yt_type = download_status.get('yt_type')
-    dt.yt_size = download_status.get('yt_size')
+    dt.yt_size_mb = download_status.get('yt_size_mb')
     dt.yt_resolution = download_status.get('yt_resolution')
     dt.download_date = datetime.now()
     

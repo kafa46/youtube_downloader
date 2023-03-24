@@ -45,11 +45,12 @@ def downloading():
     '''요청 받은 파일을 생성하여 다운로드 - yt_dlp 활용 버전'''
     params =  request.json
     url = params['url']
-    index = int(params['index'])
+    index_in_html_table = int(params['index'])
     video_idx = int(params['video_idx'])
     file_type = str(params['type'])
     file_type = FILE_TYPE.get(file_type) 
-    file_size = int(params['file_size'])
+    file_size_approx_from_js = int(params['file_size'])
+    
     info_dic = YoutubeDL().extract_info(url, download=False)
     video_title = info_dic.get('title')
     resolution = info_dic.get('resolution')
@@ -78,25 +79,26 @@ def downloading():
     except Exception as e:
         print(f'Error occurred: {e}')
     
-    
     result = os.system(cmd)
-    print(f'output_path: {os.path.join(DOWNLOAD_PATH, file_name)}')
+    file_path = os.path.join(DOWNLOAD_PATH, file_name)
+    # print(f'output_path: {file_path}')
     
     data = {
         'code': '200' if result == 0 else '400',
         'output_path': DOWNLOAD_PATH,
         'file_name': file_name,        
-        'file_path': os.path.join(DOWNLOAD_PATH, file_name),
+        'file_path': file_path,
         'error':'',
     }
     
     # Save current download status for analyzing & debugging
+    file_size_real = int(os.path.getsize(file_path) / (1000 * 1000)) # size in Mbytes
     download_status = {
         'referrer': request.remote_addr,
         'yt_url': url,
         'yt_title': video_title,
-        'yt_type': file_type, # mp4, m4a, mp3
-        'yt_size': file_size,
+        'yt_type': 'mp4' if file_type=='optimal' else file_type, # mp4, m4a, mp3
+        'yt_size_mb': file_size_real, # unit: Mega Bytes
         'yt_resolution': resolution,
     }
     save_ok = save_download_status(download_status)    
@@ -109,9 +111,6 @@ def request_file():
     '''사용자 요청에 따라 파일 전송'''
     file_path =  request.args.get('file')
     filename = file_path.split('/')[-1]
-    # print(f'request_file(file_path) >>>')
-    # print(f'file_path: {file_path}')
-    # print(f'filename: {filename}')
     return send_file(
             path_or_file=file_path,
             as_attachment=True,

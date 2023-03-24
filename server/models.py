@@ -27,7 +27,7 @@ class DownloadData(db.Model):
     yt_url = db.Column(db.String(500), nullable=True)   # Youtube url
     yt_title = db.Column(db.String(500), nullable=True) # Youtube title
     yt_type = db.Column(db.String(50), nullable=True)   # download type (ex: mp4, m4a, mp3)
-    yt_size = db.Column(db.Integer, nullable=True)   # download size in Megabyte Integer
+    yt_size_mb = db.Column(db.Integer, nullable=True)   # download size in Megabyte Integer
     yt_resolution = db.Column(db.String(50), nullable=True) # resolution (ex: 10)
     download_date = db.Column(db.DateTime, nullable=True)
     

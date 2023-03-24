@@ -14,6 +14,7 @@ class PacketAnalyzer:
     def __init__(self, url:str) -> None:
         self.url = url
 
+
     def check_numeric_url(self, url_string:str):
         check = f'\d+.\d+.\d.+.\d'
         pattern = re.compile(check)
@@ -59,15 +60,15 @@ class PacketAnalyzer:
         if not numeric_ip:
             ip = self.get_ip(self.url)
         result = self.get_demography(ip)
-        pprint(result)
+        # pprint(result)
         return result
 
         
 class ClientDeviceAnalyzer:
     '''안전한 클라이언트인지 -> 접속 정보를 확인하여 리턴 
         주의: 'client_request' 파라미터는 반드시 
-              flask에서 지원하는 'request' 객체이어야 함.
-              'Django'의 'request' 객체일 경우 별도 메서드로 구현해야 함.
+              Flask에서 지원하는 'request' 객체이어야 함.
+              Django -> 'request' 객체일 경우 별도 메서드로 구현해야 함.
     '''
     
     def __init__(self, web_framework: str = 'flask') -> None:
@@ -97,7 +98,6 @@ class ClientDeviceAnalyzer:
             elif ua.is_bot:
                 device_type = 'bot'
             
-            
             client_data = {
                 'browser_type': ua.browser.family,
                 'browser_version': ua.browser.version_string,
@@ -108,7 +108,8 @@ class ClientDeviceAnalyzer:
                 'device_type': device_type,
                 'user_agent_string': ua_string,
             }
-            pprint(client_data)
+            
+            # pprint(client_data)
             return client_data
         
         elif self.web_framework == 'django':
