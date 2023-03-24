@@ -26,19 +26,9 @@
         - Namu wiki: https://namu.wiki/w/youtube-dl
 '''
 
-import yt_dlp
 import os
-import subprocess
+from pprint import pprint
 from yt_dlp import YoutubeDL
-# from config import DOWNLOAD_PATH
-
-# def ydl_downloader(url: str) -> None:
-#     '''downloader using yt_dlp pkg.'''
-#     ydl_opts = {
-        
-#     }
-#     downloader =  yt_dlp.YoutubeDL(ydl_opts)
-#     downloader.download(url)
     
 def get_yt_info(url: str) -> dict:
     '''Extract YouTube information'''
@@ -143,15 +133,17 @@ def get_all_format(url: str) -> list:
     # 추출한 정보를 리스트에 추가
     download_info.append(m4a_audio)
     
-    # 예상되는 다운로드 사이즈 계산: video + audio + 30 Mb
+    # 예상되는 다운로드 사이즈 -> video_size + voice_size + overhead (10%)
     for x in download_info:
         if x['type'] == 'mp4':
-            x['size_mb'] += m4a_audio['size_mb'] + 80.0
+            x['size_mb'] += m4a_audio['size_mb']
+            # increase size 20% out of original file size
+            x['size_mb'] = x['size_mb'] + x['size_mb'] * 0.1
+    # pprint(download_info)
     
     return download_info
-    
-    
-    
+
+
 def get_downloadable_list(url: str, ) -> dict:
     '''Extract possible formats''' 
     options = {
@@ -160,12 +152,14 @@ def get_downloadable_list(url: str, ) -> dict:
     ydl = YoutubeDL(options)
     ydl.filter_requested_info()
 
+
 def download_mp3(url: str, filename:str, save_path:str = './') -> None:
     # Reference: https://blog.amaorche.com/142
     result = os.system(
         f'yt-dlp --extract-audio --audio-format mp3 -o "./download/%(title)s.%(ext)s" {url}'
     )
     
+
 if __name__=='__main__':
     url = 'https://youtu.be/eYtSJdQIsB4'
     get_yt_info(url)

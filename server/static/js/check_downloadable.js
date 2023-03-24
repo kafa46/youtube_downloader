@@ -75,7 +75,6 @@ function check_form_content(){
     return true
 }
 
-
 function append_table_element(data){
     var type = {
         'mp4': 1,
@@ -83,14 +82,28 @@ function append_table_element(data){
         'mp3': 3,
         'optimal': 4,
     }
-    // 최적 동영상 다운로드
-    // 최적 도영상 size 찾기 -> id == 22
-    // let best_video_size = 0;
-    // for (x=0; x<data.length; x++){
-    //     if (data[x]['files']['id'] == 22 ){
-    //         best_video_size = data[x]['files']['size_mb']
-    //     }
-    // }
+    // 최적 동영상 size 찾기 -> id == 22
+    let best_video_size = 0;
+    for (x=0; x<data.length; x++){
+        
+        let id = data[x]['id'];
+        let type = data[x]['type'];
+        let size = Number(data[x]['size_mb']);
+        let id_data_type = typeof(data[x]['id']);
+
+        // check current data & type
+        // console.log(`id: ${id} (type: ${id_data_type}), type: ${type}`)
+
+        if (id==='22' && type=== 'mp4' ){
+            best_video_size = size
+        } else if (data[x]['type'] === 'mp4'){
+            if (data[x]['size_mb'] > best_video_size ){
+                best_video_size = size
+            }
+        }
+    }
+    // console.log(`best_video_size: ${best_video_size}`)
+    // alert('best_video_size')
     $('#video-list').append(
         `<tr class="file-list">
             <th>비디오(최적)</th>
@@ -101,7 +114,7 @@ function append_table_element(data){
                 <a href="#"
                     id="mp3"
                     class="download-item btn btn-outline-primary"
-                    onclick="download_tube(${0}, ${22}, ${0}, ${type['optimal']})">받기</a>
+                    onclick="download_tube(${0}, ${22}, ${best_video_size}, ${type['optimal']})">받기</a>
             </td>
          <tr>`
     )
@@ -168,16 +181,14 @@ function append_table_element(data){
     )
 }
 
-
 // function download_tube(index, file_size, type){
 function download_tube(index, video_idx, file_size, type){
     // 선택된 유튜브 영상을 다운로드
-    // console.log(`type: ${type}`)
     let send_url = $('#downloading').data('download-url'); // 다운로드 view url
     let youtube_url = $('#url').val();
-    // console.log(`index: ${index}`)
-    // console.log(`file_size: ${video_idx}`)
+    
     show_loading_img();
+
     let data = {
         'index': index,
         'video_idx': video_idx,
