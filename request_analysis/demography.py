@@ -5,6 +5,8 @@ import socket
 from urllib.parse import urlparse
 from flask import request
 from pprint import pprint
+from user_agents import parse
+
 
 class PacketAnalyzer:
     '''서버 접속량 및 활용 지역 분석을 위한 패킷 정보 추출'''
@@ -81,20 +83,37 @@ class ClientDeviceAnalyzer:
         
         if self.web_framework == 'flask':
             '''플라스크 프레임워크를 사용하는 경우'''
-            ua = client_request.user_agent
+            ua_string = client_request.user_agent.string
+            ua = parse(ua_string)
+            
+            # check mobile type
+            device_type = None
+            if ua.is_mobile:
+                device_type = 'mobile'
+            elif ua.is_tablet:
+                device_type = 'tablet'
+            elif ua.is_pc:
+                device_type = 'pc'
+            elif ua.is_bot:
+                device_type = 'bot'
+            
+            
             client_data = {
-                'string': ua.string,
-                'platform': ua.flatform,
-                'browser': ua.browser,
-                'version': ua.version,
-                'language': ua.language,
+                'browser_type': ua.browser.family,
+                'browser_version': ua.browser.version_string,
+                'os_type': ua.os.family,
+                'os_version': ua.os.version_string,
+                'device_family': ua.device.family,
+                'device_brand': ua.device.brand,
+                'device_type': device_type,
+                'user_agent_string': ua_string,
             }
             pprint(client_data)
             return client_data
         
         elif self.web_framework == 'django':
             '''장고 프레임워크를 사용하는 경우 
-                -> 향후 추가로 코딩해줄 영역...
+                -> 향후 코딩 추가 영역...
             '''
             pass
 

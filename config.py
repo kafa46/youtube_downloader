@@ -29,3 +29,11 @@ REG_REPLACE = {
     ('"', ''),
     ("'", ''),
 }
+
+# 접속자의 기기 환경
+# DEVICE_TYPE = {
+#     'mobile': 1,
+#     'tablet': 2,
+#     'pc': 3,
+#     'bot': 4
+# }

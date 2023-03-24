@@ -2,11 +2,11 @@ import os
 import subprocess
 import re
 from flask import Blueprint, jsonify, render_template, redirect, send_file, url_for, request
-from pytube import YouTube
+# from pytube import YouTube # pytube -> yt_dlp 패키지로 대체
 from config import DOWNLOAD_PATH, FILE_TYPE, REG_REPLACE
+from server.utils import save_client_packet_info, save_download_status
 from tube_downloader.yt_dl import get_all_format, get_audio_format_only
 from yt_dlp import YoutubeDL
-from request_analysis.demography import PacketAnalyzer, ClientDeviceAnalyzer
 
 bp = Blueprint('download', __name__, url_prefix='/download')
 
@@ -32,6 +32,11 @@ def check_downloadable():
         'filesize_approx': info_dic.get('filesize_approx'),
         'is_live': info_dic.get('live_status')
     }
+    
+    # Save client packet info
+    save_ok = save_client_packet_info(request)
+    data['db_stored'] = 'True' if save_ok else 'False'
+    
     return jsonify(data)
 
     
@@ -43,7 +48,7 @@ def downloading():
     index = int(params['index'])
     video_idx = int(params['video_idx'])
     file_type = str(params['type'])
-    file_type = FILE_TYPE.get(file_type)
+    file_type = FILE_TYPE.get(file_type) 
     file_size = int(params['file_size'])
     info_dic = YoutubeDL().extract_info(url, download=False)
     video_title = info_dic.get('title')
@@ -84,6 +89,18 @@ def downloading():
         'file_path': os.path.join(DOWNLOAD_PATH, file_name),
         'error':'',
     }
+    
+    # Save current download status for analyzing & debugging
+    download_status = {
+        'referrer': request.remote_addr,
+        'yt_url': url,
+        'yt_title': video_title,
+        'yt_type': file_type, # mp4, m4a, mp3
+        'yt_size': file_size,
+        'yt_resolution': resolution,
+    }
+    save_ok = save_download_status(download_status)    
+    data['db_stored'] = 'True' if save_ok else 'False'
     
     return jsonify(data)
 
