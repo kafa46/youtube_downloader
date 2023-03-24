@@ -3,32 +3,25 @@ import subprocess
 import re
 from flask import Blueprint, jsonify, render_template, redirect, send_file, url_for, request
 from pytube import YouTube
-from config import DOWNLOAD_PATH, FILE_TYPE
+from config import DOWNLOAD_PATH, FILE_TYPE, REG_REPLACE
 from tube_downloader.yt_dl import get_all_format, get_audio_format_only
 from yt_dlp import YoutubeDL
-
-# from request_analysis.demography import get_demography
+from request_analysis.demography import PacketAnalyzer, ClientDeviceAnalyzer
 
 bp = Blueprint('download', __name__, url_prefix='/download')
-
 
 @bp.route('/check_downloadable', methods=['POST'])
 def check_downloadable():
     '''다운로드 가능한 주소인지 확인하고 해당 결과를 리턴'''
     params = request.json
     url = params['url']
-    # print(f'youtube url: {url}')
-    
     try:
         ydl = YoutubeDL()
         info_dic = ydl.extract_info(url, download=False)
     except Exception as e:
         print(f'\nerror: {e}')
-            
+        
     downloadables = get_all_format(url)
-    
-    # print(f'str(request.remote_addr): {str(request.remote_addr)}')
-    
     data = {
         'code': '200' if downloadables else '400',
         'files': downloadables,
@@ -56,31 +49,13 @@ def downloading():
     video_title = info_dic.get('title')
     resolution = info_dic.get('resolution')
     
-    
-    # print(f'url: {url}')
-    # print(f'index: {index}')
-    # print(f'video_idx: {video_idx}')
-    # print(f'file type: {file_type}')
-    # print(f'file size: {file_size}')
-    
     # 객체 생성 및 필요한 정보 추출
     m4a_audio = get_audio_format_only(url)
     audio_idx = m4a_audio.get('id')
     
     # 안전한 파일 이름으로 변경
-    REG_REPLACE = {
-        (',', '_'),
-        ('#', '_'),
-        (' ', '_'),
-        ('/', '_'),
-        ('\\', '_'),
-        ('"', ''),
-        ("'", ''),
-    }
-    
     for old, new in REG_REPLACE:
         video_title = re.sub(old, new, video_title, flags=re.IGNORECASE)   
-    # video_title = video_title.replace(',', '_').replace('#', '_').replace(' ', '')
     
     try:
         if file_type == 'optimal':
