@@ -1,5 +1,8 @@
 # CJU-Tube
 
+<img src="server/static/imgs/favicon/cju-tube.png" width="200px">
+
+
 ## Development Background
 
 - `CJU-Tube` is an open source for youtube downloading developed by Cheongju university.
@@ -17,6 +20,8 @@
 - Back-end: flask, yt-dlp, shell scripting
 - Network: nginx, uwsgi
 
+## History
+
 ## References
 
 - Here is the table contianing all material we referenced.
@@ -30,4 +35,3 @@
 |Blog|Python Flask에서 현재 주소 Url 알아내는 방법|[link](https://webisfree.com/2017-09-24/python-flask%EC%97%90%EC%84%9C-%ED%98%84%EC%9E%AC-%EC%A3%BC%EC%86%8C-url-%EC%95%8C%EC%95%84%EB%82%B4%EB%8A%94-%EB%B0%A9%EB%B2%95)|
 |Blog|브라우저의 사용자 에이전트는 왜 이렇게 복잡하게 생겼을까?|[link](https://wormwlrm.github.io/2021/10/11/Why-User-Agent-string-is-so-complex.html)|
 |Q&A|How do I get the user agent with Flask?|[link](https://stackoverflow.com/questions/9878020/how-do-i-get-the-user-agent-with-flask)|
-
