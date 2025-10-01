@@ -1,0 +1,125 @@
+.emphasis-text {
+    color: red
+}
+
+.progress.no-rounded,
+.progress.no-rounded .progress-bar {
+    border-radius: 0;
+}
+
+/* 블러 처리용 오버레이 -> 부드러운 파랑 배경 + 강한 블러 효과 */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    backdrop-filter: blur(16px);
+    background-color: rgba(160, 217, 236, 0.65);
+    /* 더 진한 느낌의 파랑 */
+    z-index: 9999;
+
+    display: none;
+    transition: opacity 0.4s ease;
+    opacity: 0;
+}
+
+/* 표시될 때 애니메이션 */
+#overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+/* 글자 깜빡임 */
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#progress-msg {
+    animation: blink 1s infinite;
+    /* 1초 간격으로 무한 반복 */
+}
+
+
+/* "유튜브 영상 검사 중..." 메시지가 표시될 때 시각적 재미를 더하기 위한 애니메이션 아이콘 */
+.scan-icon {
+    animation: pulse 1.5s infinite;
+    font-size: 2.5rem;
+    display: inline-block;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 유튜브 input-group 사이의 이미지와 텍스트 정렬 */
+.input-group-text img {
+    margin-top: -2px;
+}
+
+.tube-container {
+    margin-top: auto;
+}
+
+/* 다운로드 progressbar 컨테이너 */
+.progress-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px 0;
+}
+
+/* 알림 모달 */
+.modal-slide-down .modal-dialog {
+    transform: translateY(-30%) scale(0.9);
+    transition: all 0.5s ease;
+}
+
+.modal-slide-down.show .modal-dialog {
+    transform: translateY(0) scale(1);
+}
+
+/* 유튜브 검색 결과 카드 - 제목 글자 크기 조절 */
+.card-title {
+    font-size: 1rem;
+    /* 일반 텍스트 크기 */
+    font-weight: normal;
+}
+
+/* 유튜브 검색 결과 카드 - 내부의 썸네일 이미지 */
+.rounded-thumbnail {
+    border-radius: 6px;
+}
+
+/* 유튜브 검색 결과 카드 - 썸네일 복원 시 fade-in 애니메이션을 적용 */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.4s ease-in;
+}
+
+.fade-in.show {
+    opacity: 1;
+}

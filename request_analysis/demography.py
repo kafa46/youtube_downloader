@@ -27,12 +27,17 @@ class PacketAnalyzer:
         url = f'https://ipinfo.io/{ip}/json'
         response = requests.get(url)
         data = json.loads(response.text)
+        print(f'data: {data}')
+        if data.get('org'):
+            org = ' '.join(data.get('org').split(' ')[1:])
+        else:
+            org = 'No organization'
         result = {
             'ip': data.get('ip'),
             'city': data.get('country'),
             'region':data.get('region'),
             'country': data.get('country'),
-            'org': ' '.join(data.get('org').split(' ')[1:]),
+            'org': org,
         }
         return result
 
@@ -75,7 +80,7 @@ class ClientDeviceAnalyzer:
         self.web_framework = web_framework
     
 
-    def analyzer(self, client_request: request)-> dict:
+    def analyzer(self, client_request)-> dict:
         '''ref: 
         - stackoverflow -> https://stackoverflow.com/questions/9878020/how-do-i-get-the-user-agent-with-flask
         - ua-parser -> https://github.com/ua-parser/uap-python
@@ -125,7 +130,3 @@ if __name__=='__main__':
     pa.analyzer()
     
     
-    # ip = '223.130.195.200'
-    host_name = get_host_name(ip)
-    
-    get_demography(ip)

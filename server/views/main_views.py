@@ -7,7 +7,7 @@ bp = Blueprint('main', __name__, url_prefix='/')
 def index():
     '''Main function'''
     form = YoutubeSearchForm()
-    if request.method=='POST':
+    if request.method=='POST' and form.validate_on_submit():
         url = request.form.get('url')
         print(f'url: {url}')
         
@@ -16,3 +16,11 @@ def index():
         context='test',
         form=form,
     )
+    
+# 예: main_views에 임시 추가
+@bp.route("/healthz")
+def healthz():
+    from flask import request
+    print("remote_addr:", request.remote_addr)
+    return "ok"
+    

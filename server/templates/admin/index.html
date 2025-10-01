@@ -1,0 +1,13 @@
+<!-- templates/admin/index.html -->
+
+<h1>관리자 페이지</h1>
+<ul>
+  <li><a href="{{ url_for('admin.show_quota') }}">API 크레딧 상태</a></li>
+  <li><a href="{{ url_for('admin.show_cache') }}">캐시 목록 보기</a></li>
+</ul>
+
+
+<form action="{{ url_for('admin.reset_quota_admin') }}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button type="submit">API 크레딧 초기화 (10,000)</button>
+</form>

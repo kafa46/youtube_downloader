@@ -1,0 +1,36 @@
+<!-- templates/admin/cache_list.html -->
+
+<h1>캐시 목록</h1>
+
+<form action="{{ url_for('admin.clear_all_cache') }}" method="post" style="display:inline;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit">전체 캐시 삭제</button>
+</form>
+
+<form action="{{ url_for('admin.delete_old_cache') }}" method="post" style="display:inline;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit">30일 지난 캐시 삭제</button>
+</form>
+
+<table border="1" style="margin-top: 1rem;">
+    <tr>
+        <th>검색어</th>
+        <th>저장 시각</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+        <td>{{ record.query_string }}</td>
+        <td>{{ record.timestamp }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for msg in messages %}
+    <li style="color: green;">{{ msg }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}

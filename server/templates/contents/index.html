@@ -1,26 +1,66 @@
+<!-- templates/contents/index.html -->
+
 {% extends '/home/base.html' %}
 
-{% block contents %}
+{% block head %}
+<script type="module">
+  import { initTubeSearch } from "/static/js/tube_search.js?v=1.0.1";
+  initTubeSearch();
+</script>
 
-<form action="{{ url_for('main.index') }}" method="post" class="post-form">
-  {{ csrf_token }}
-  <div class="row g-3 align-items-center mx-2">
+<!-- tube_search.js를 모듈화 하여 js/tube/... 으로 구성했을 경우 사용하는 방식 -->
+<!-- 모듈화 에러가 있어 아직은 적용하지 못함. -->
+<!-- <script type="module">
+  import { initTubeSearch } from "/static/js/tube/index.js";
+  initTubeSearch();
+</script> -->
+
+<!-- Font Awesome CDN 추가 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+{% endblock %}
+
+{% block contents %}
+<!-- 유튜브 카드 내부에 있는 다운로드 클릭 시 이동할 위치 -->
+<div id="move-to-top" style="height: 1px;"></div>
+
+<!-- 유튜브 동영상 주소를 입력하여 다운로드 하는 form -->
+<form action="{{ url_for('main.index') }}" method="post" class="post-form" id="tube-url-search-form">
+  {{ form.csrf_token }}
+  <div class="row g-3 align-items-center mx-2 mt-3">
     <div class="col-auto">
       <label for="url" class="col-form-label">유튜브 주소</label>
     </div>
     <div class="col-sm-6">
-      <input type="text" id="url" class="form-control" name="url" placeholder="유튜브 주소를 입력해 주세요">
+      <input type="text" id="url" class="form-control" name="url" placeholder="유튜브 주소(복사해서 붙여넣기) 입력해 주세요">
     </div>
     <div class="col-auto">
-      <a class="btn btn-outline-primary" id="submit-btn"
-        data-url="{{ url_for('download.check_downloadable') }}">조회</a>
-      <a class="btn btn-outline-primary" id="clear-btn" onclick="clear_content()">내용 초기화</a>
+      <a class="btn btn-outline-primary" id="submit-btn" data-url="{{ url_for('download.check_downloadable') }}">조회</a>
+      <a class="btn btn-outline-primary" id="clear-btn" hidden>내용 초기화</a>
     </div>
   </div>
 </form>
 
-<div class="loading" hidden></div>
+<!-- 다운로드 프로그레스바 영역 -->
+<div class="progress-container px-2">
+  <div class="progress my-4" id="progress-wrapper" hidden style="height: 2.5rem;">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="serverProgressbar"
+      role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>
+  </div>
+  <p class="m-2 p-2" id="progress-msg" style="color:blue" hidden>잠시만 기다려 주세요 ^^.<br>파일이 크면,<br>오래 걸릴 수 있어요 ㅠㅠ</p>
+</div>
 
+<!-- 다운로드 버튼 (숨겨짐) -->
+<a href="{{ url_for('download.request_file') }}" id="request-file-btn" class="btn btn-outline-primary" hidden>다운로드</a>
+
+<!-- 작은 스피너만 가운데 띄우기 (배경 없이) -->
+<div class="loading position-fixed top-50 start-50 translate-middle" style="z-index: 1050;" hidden>
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status" style="width: 5rem; height: 5rem;"></div>
+    <p id="loading-message" class="mt-3 fw-bold fs-5 p-2 m-1" style="background-color: beige;"></p>
+  </div>
+</div>
+
+<!-- 검색 결과 표시: 썸네일 이미지, 제목, 재생시간 -->
 <div class="row my-3 mx-2">
   <div class="col-sm-10">
     <div class="row my-3 p-2 border border-dark rounded" id="tube-info-area" hidden>
@@ -36,17 +76,22 @@
   </div>
 </div>
 
-
+<!-- 검색 결과에 대한 안내문 -->
 <div class="row mb-5 mx-1" id="table-area" hidden>
-  <div><p style="color: red;">다운로드 파일 용량은 예측치 입니다. 다운로드가 완료된 이후 용량은 다를 수 있습니다.</p></div>
-  <div><p style="color: blue;">최적 용량/해상도 이외 옵션을 선택할 경우 서버 처리시간이 길어질 수 있습니다. </p></div>
+  <div>
+    <p style="color: red;">다운로드 파일 용량은 예측치 입니다. 다운로드가 완료된 이후 용량은 다를 수 있습니다.</p>
+  </div>
+  <div>
+    <p style="color: blue;">최적 용량/해상도 이외 옵션을 선택할 경우 서버 처리시간이 길어질 수 있습니다. </p>
+  </div>
+  <!-- 다운로드 가능한 목록 -->
   <table class="table">
     <thead>
-        <th>구분</th>
-        <td>타입</td>
-        <td>크기</td>
-        <td>해상도</td>
-        <td id="downloading" data-download-url="{{ url_for('download.downloading') }}">다운로드</td>
+      <th>구분</th>
+      <td>타입</td>
+      <td>크기</td>
+      <td>해상도</td>
+      <td id="downloading" data-download-url="{{ url_for('download.downloading') }}">다운로드</td>
     </thead>
     <tbody id="video-list">
     </tbody>
@@ -54,8 +99,11 @@
 </div>
 
 <div id="request-file" data-request-file="{{ url_for('download.request_file') }}" hidden></div>
-<a href="{{ url_for('download.request_file') }}" 
-  id="request-file-btn"
-  class="btn btn-outline-primary" hidden>다운로드</a>
-  
+
+<!-- 🎯 유튜브 직접 검색 안내 및 버튼 -->
+<div id="tube-search-box">
+  {% include 'contents/partials/tube_container.html' %}
+</div>
+
+{% include 'contents/partials/alert_modal.html' %}
 {% endblock %}

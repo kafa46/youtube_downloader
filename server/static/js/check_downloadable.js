@@ -1,317 +1,233 @@
-// '다운로드 조회' 버튼을 누른 경우
-$(function(){
-    // 다운로드 가능 여부를 확인하고 해당 정보를 렌더링
-    $('#submit-btn').on('click', function(){
-        let send_url = $('#submit-btn').data('url');
-        let youtube_url = $('#url').val();
-        // 유튜브 주소를 입력하였는지 확인
-        let is_content = check_form_content();
-        if (is_content==false){
-            // console.log('유튜브 주소를 입력하지 않았습니다.')
-            alert('유튜브 주소를 입력하지 않았습니다.')
-            return false
-        } 
-        delete_table_element(); // 기존 테이블 데이터 삭제
-        $('#table-area').attr('hidden', true); // 테이블 숨기기 -> 검색이 끝나면 보이기
-        $('#tumnail-link').attr('href', ''); // 썸네일 링크 초기화
-        show_loading_img(); // Loading 이미지 시작
-        hide_youtube_info();
-        // console.log(youtube_url)
-        // alert(1)
-        $.ajax({
-            method: 'post',
-            url:send_url,
-            contentType: "application/json",
-            data: JSON.stringify(
-                {'url': youtube_url}
-            ),
-            success: (data)=>{
-                // console.log(data)
-                // 비디오 리스트를 받아오면 표에 시현
-                if (data.code==='200'){
-                    append_table_element(data.files);
-                    hide_loading_img(); // 로딩 이미지 숨기기
-                    // console.log(data.title);
-                    // console.log(data.thumbnail_url);
-                    show_youtube_info(data.thumbnail_url, data.title, data.duration);
-                    add_link_to_thumbnail(youtube_url); // 썸네일 이미지에 유튜브 링크 걸기
-                    hide_result_table(); // 검색결과 테이블 보이기
-                } else if (data.code==='400'){
-                    alert('에러가 발생했습니다. 주소를 확인해 주세요')
+/* server/static/js/check_downloadable.js */
+
+"use strict";
+
+// 유튜브 주소 확인 및 다운로드 가능 목록 조회
+document.addEventListener("DOMContentLoaded", () => {
+    const submitBtn = document.getElementById("submit-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    const csrfToken = document.getElementById("csrf_token")?.value;
+
+    if (submitBtn) {
+        submitBtn.addEventListener("click", async () => {
+            const urlInput = document.getElementById("url").value.trim();
+            if (!urlInput) {
+                alert("유튜브 주소를 입력해 주세요.");
+                return;
+            }
+
+            clearTable();
+            toggleElement("table-area", false);
+            hideYouTubeInfo();
+            showLoading("서버 🔥 엔진에서<br>가능한 목록을<br>조회 중입니다👊<br>잠시만 기다려<br>주세요😁^^<br>");
+
+            try {
+                const response = await fetch(submitBtn.dataset.url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...(csrfToken && { "X-CSRFToken": csrfToken })
+                    },
+                    body: JSON.stringify({ url: urlInput })
+                });
+
+                // ✅ JSON 응답인지 확인
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const errorText = await response.text(); // HTML 본문 보기
+                    // console.error("❌ 서버 응답이 JSON이 아님:", errorText);
+                    alert(`다운로드 가능성을 검사하던 중\n서버 오류가 발생했습니다.\n이 동영상은 다운로드 할 수 없어요 ㅠ`);
+                    return;
                 }
-            },
-            error:(error)=>{
-                // console.log(error)
-                alert('에러가 발생했습니다. 주소를 확인해 주세요');
-                hide_loading_img(); // 로딩 이미지 숨기기
-                clear_content();// 초기화 버튼
+
+                const data = await response.json();
+
+                if (data.code === "200") {
+                    renderVideoList(data.files, urlInput);
+                    showYouTubeInfo(data.thumbnail_url, data.title, data.duration);
+                    clearBtn.hidden = false;
+                } else {
+                    alert("에러가 발생했습니다. 유튜브 주소를 확인해 주세요.");
+                }
+            } catch (err) {
+                console.error("요청 중 오류 발생:", err);
+                alert(`다운로드 가능성을 검사하던 중\n서버 오류가 발생했습니다.\n이 동영상은 다운로드 할 수 없어요 ㅠ\n오류내용: ${err}`);
+            } finally {
+                hideLoading();
             }
         });
-    });
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+            document.getElementById("url").value = "";
+            clearTable();
+            hideYouTubeInfo();
+            hideLoading();
+            toggleElement("table-area", false);
+            clearBtn.hidden = true;
+        });
+    }
 });
 
 
-function add_link_to_thumbnail(youtube_url){
-    // 썸네일에 유튜브 링크 걸기
-    $('#tumnail-link').attr('href', youtube_url);
-}
+// 개별 선택 아이템을 다운로드 하는 함수
+async function download_tube(index, video_idx, file_size, type, socket_id) {
+    const send_url = document.getElementById('downloading').dataset.downloadUrl;
+    const youtube_url = document.getElementById('url').value;
+    const csrf_token = document.getElementById('csrf_token')?.value;
 
+    // m4a/mp3/mp4 사용자 안내
+    if (type === 3 && !confirm("mp3 파일은 서버에서 추가 변환 작업을 해야 합니다.\n변환 시간이 오래 걸릴 수 있습니다.\n진행할까요?")) return;
+    if (type === 1 && !confirm(`${file_size} MB 동영상을 다운받습니다.\n서버 처리 시간이 길어질 수 있습니다.\n진행할까요 ^^?`)) return;
 
-function remove_link_to_thumbnail(){
-    // 썸네일에 유튜브 링크 걸기
-    $('#tumnail-link').attr('href', '');
-}
+    // 로딩 메시지 및 스피너 표시
+    document.getElementById('loading-message').innerHTML =
+        '<div class="scan-icon">👀</div><br>영상 검사 중...<br>메시지가 사라지면<br>진행상태 표시됨.<br>기다려 주세요^^';
 
+    document.getElementById('overlay')?.classList.remove('hidden');
+    document.querySelector('.loading')?.removeAttribute('hidden');
 
-function hide_result_table(){
-    // 동영상 검색 결과 테이블 감추기
-    $('#table-area').attr('hidden', false);
-}
+    const payload = {
+        index,
+        video_idx,
+        url: youtube_url,
+        type,
+        file_size,
+        socket_id
+    };
 
-function check_form_content(){
-    // 유튜브 주소창에 내용을 입력했는지 확인
-    let youtube_url = $('#url').val();
-    if (youtube_url == ''){return false}
-    return true
-}
+    try {
+        const response = await fetch(send_url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...(csrf_token && { 'X-CSRFToken': csrf_token })
+            },
+            body: JSON.stringify(payload)
+        });
 
-function append_table_element(data){
-    var type = {
-        'mp4': 1,
-        'm4a': 2,
-        'mp3': 3,
-        'optimal': 4,
-    }
-    // 최적 동영상 size 찾기 -> id == 22
-    let best_video_size = 0;
-    for (x=0; x<data.length; x++){
-        
-        let id = data[x]['id'];
-        let type = data[x]['type'];
-        let size = Number(data[x]['size_mb']);
-        let id_data_type = typeof(data[x]['id']);
+        const result = await response.json();
 
-        // check current data & type
-        // console.log(`id: ${id} (type: ${id_data_type}), type: ${type}`)
+        // console.log('다운로드 요청 결과:', result);
 
-        if (id==='22' && type=== 'mp4' ){
-            best_video_size = size
-        } else if (data[x]['type'] === 'mp4'){
-            if (data[x]['size_mb'] > best_video_size ){
-                best_video_size = size
-            }
+        if (result.code !== '200') {
+            alert('파일 생성에 실패했습니다.');
         }
+    } catch (error) {
+        console.error('다운로드 중 오류 발생:', error);
+        alert('서버 오류가 발생했습니다.');
+    } finally {
+        document.getElementById('overlay')?.classList.add('hidden');
+        document.querySelector('.loading')?.setAttribute('hidden', true);
     }
-    // console.log(`best_video_size: ${best_video_size}`)
-    // alert('best_video_size')
-    $('#video-list').append(
-        `<tr class="file-list">
-            <th>비디오(최적)</th>
-            <td>mp4</td>
-            <td style="color: red;">최고속도<br>강추!!</td>
-            <td style="color: red;">최적해상도<br>(자동설정)</td>
-            <td>
-                <a href="#"
-                    id="mp3"
-                    class="download-item btn btn-outline-primary"
-                    onclick="download_tube(${0}, ${22}, ${best_video_size}, ${type['optimal']})">받기</a>
-            </td>
-         <tr>`
-    )
-    // 일반 선택 옵션 추가 - 최대 5개만 보여주기
-    let video_max_list = 3;
-    if (video_max_list > data.length){
-        video_max_list = data.length;
-    }
-    for(let x=0; x<data.length; x++){
-        // console.log(data[x])
-        let data_type = '';
-        let extention = 'mp4';
-        
-        // let key = Object.keys(data[x])[0];
-        // console.log(x, video_max_list)
-        if (x > video_max_list && data[x].type === 'mp4'){
-            continue;
-        }
-
-        if (data[x].type==='mp4'){
-            data_type = '비디오';
-        } else if (data[x].type==='m4a'){
-            data_type = '오디오(MP4 음성만)';
-            extention = 'm4a'
-        } else {
-            data_type = '알수 없음';
-        }
-        const file_size = Math.round(data[x].size_mb * 10)/10; // 파일 크기 -> 소수 첫째자리 변환
-        const file_size_comma = file_size.toLocaleString('en-US');
-        $('#video-list').append(
-            `<tr class="file-list">
-                <th>${data_type}</th>
-                <td>${data[x].type}</td>
-                <td>${file_size_comma} MB</td>
-                <td>${data[x].resolution}</td>
-                <td>
-                    <a href="#"
-                        id="down-index-${x}"
-                        class="download-item btn btn-outline-primary"
-                        onclick="download_tube(
-                            ${x}, 
-                            ${data[x].id}, 
-                            ${file_size},  
-                            ${type[data[x].type]}
-                        )">받기</a>
-                </td>
-             <tr>`
-        )
-    }
-    // MP3 변환 후 다운로드 하기 추가
-    $('#video-list').append(
-        `<tr class="file-list">
-            <th>MP3 파일</th>
-            <td>mp3</td>
-            <td>서버 변환 후 다운<br>(용량 알수 없음)</td>
-            <td>해당없음</td>
-            <td>
-                <a href="#"
-                    id="mp3"
-                    class="download-item btn btn-outline-primary"
-                    onclick="download_tube(${0}, ${0}, ${0}, ${type.mp3})">받기</a>
-            </td>
-         <tr>`
-    )
 }
 
-// function download_tube(index, file_size, type){
-function download_tube(index, video_idx, file_size, type){
-    // 선택된 유튜브 영상을 다운로드
-    let send_url = $('#downloading').data('download-url'); // 다운로드 view url
-    let youtube_url = $('#url').val();
-    
-    show_loading_img();
-
-    let data = {
-        'index': index,
-        'video_idx': video_idx,
-        'url': youtube_url,
-        'type': type,
-        'file_size': file_size,
-    }
-    
-    // mp4 파일을 mp3 변환에서 받을지 물어보기
-    if (type == 3){
-        let mp3_decision = ask_mp3_type(); 
-        if (mp3_decision === false){
-            hide_loading_img();
-            return
-        }
-    }
-    
-    // 용량과 해상도를 선택해서 다운로드 할지 물어보기
-    if (type == 1){
-        let mp4_decision = ask_mp4_type(); 
-        if (mp4_decision === false){
-            hide_loading_img();
-            return
-        }
-    }    
-    
-    $.ajax({
-        method: 'post',
-        url:send_url,
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: (data)=>{
-            // console.log(data)
-            // 비디오 리스트를 받아오면 표에 시현
-            if (data.code==='200'){
-                hide_loading_img(); // 로딩 이미지 숨기기
-                let request_btn = $('#request-file-btn');
-                let reqeust_file_url = request_btn.attr('href');
-                let reqeust_file_url_update = `${reqeust_file_url}?file=${data.file_path}`;
-                let decision = confirm('파일이 준비되었습니다. 다운로드 하시겠습니까?');
-                if (decision){
-                    location.href = reqeust_file_url_update;
-                }
-            }
-            else{
-                // 향후 추가될 예외처리 코드                
-            }
-        },
-
-        error:(error)=>{
-            // console.log(error)
-        }
-    });
+// 유틸 함수
+function toggleElement(id, show = true) {
+    document.getElementById(id).hidden = !show;
 }
 
-function ask_mp3_type(){
-    let decision = confirm(
-        `바로 다운로드 가능한 음성파일은 m4a 형식입니다. mp3 파일로 변환해서 다운로드 받을 수 있습니다.
-        \nmp3 로 변환하면 서버 처리 시간 때문에 오래 걸릴 수 있습니다.
-        \n대용량 mp3 변환 시 1분 이상 대기하면 "내용 초기화" 버튼을 누르고 약 15초 이후에 다시 시도해 주시면 됩니다.^^.
-        \n다운로드를 시작할까요?
-        `
-    )
-    return decision
+function showLoading(message = "") {
+    document.querySelector(".loading").hidden = false;
+    const loadingMsg = document.getElementById("loading-message");
+    if (loadingMsg) {
+        loadingMsg.innerHTML = message;
+        loadingMsg.classList.remove("text-danger");
+        loadingMsg.classList.add("text-primary");
+    }
+}
+
+function hideLoading() {
+    document.querySelector(".loading").hidden = true;
+    const loadingMsg = document.getElementById("loading-message");
+    if (loadingMsg) {
+        loadingMsg.innerText = "";
+        loadingMsg.classList.remove("text-danger", "text-primary");
+    }
+}
+
+function showYouTubeInfo(thumbnailUrl, title, duration) {
+    toggleElement("tube-info-area", true);
+    document.getElementById("tube-thumbnail").src = thumbnailUrl;
+    document.getElementById("tube-title").innerText = `${title} (재생시간: ${duration})`;
+    document.getElementById("tumnail-link").href = document.getElementById("url").value;
+}
+
+function hideYouTubeInfo() {
+    toggleElement("tube-info-area", false);
+    document.getElementById("tumnail-link").href = "";
 }
 
 
-function ask_mp4_type(){
-    let decision = confirm(
-        `비디오(최적) 옵션을 선택하면 가장 빠르게 다운로드 할 수 있습니다..
-        \n하지만, 크기와 해상도를 별도로 선택하셨습니다. 
-        \n서버 처리 시간 때문에 오래 걸릴 수 있습니다 ㅠㅠ\n다운로드를 시작할까요?
-        `
-    )
-    return decision
+function clearTable() {
+    const list = document.querySelectorAll(".file-list");
+    list.forEach(el => el.remove());
 }
 
 
-function clear_content(){
-    $('#clear-btn').on('click', function(){
-        hide_youtube_info();
-        delete_table_element();
-        hide_loading_img();
-        $('#table-area').attr('hidden', true)
-        $('#url').val('')
-    });
-}
-
-
-function delete_table_element(){
+function deleteTableElement() {
     // 기존에 있던 테이블 목록 삭제
     let table_list = $('.file-list')
-    for (let i=0; i<table_list.length; i++){
+    for (let i = 0; i < table_list.length; i++) {
         table_list[i].remove()
     }
 }
 
-function show_loading_img(){
-    // 로딩 이미지 보이기
-    $('.loading').attr('hidden', false);
+// 비디오 목록 테이블 구성
+function renderVideoList(files, youtubeUrl) {
+    const table = document.getElementById("video-list");
+    const socketId = document.getElementById("socket-id")?.textContent || "";
+
+    let mp4Count = 0;
+
+    files.forEach((file, index) => {
+        if (file.type === 'mp4') {
+            if (mp4Count >= 5) return; // mp4는 최대 5개까지만 추가
+            mp4Count++;
+        }
+
+        const row = document.createElement("tr");
+        row.className = "file-list";
+
+        const sizeMB = Math.round(file.size_mb * 10) / 10;
+        const columns = [
+            `<th>${file.type === 'mp4' ? '비디오' : '오디오'}</th>`,
+            `<td>${file.type}</td>`,
+            `<td>${sizeMB.toLocaleString()} MB</td>`,
+            `<td>${file.resolution}</td>`,
+            `<td>
+                <a href="#"
+                    class="btn btn-outline-primary download-item"
+                    onclick="download_tube(${index}, '${file.id}', ${sizeMB}, ${typeMap(file.type)}, '${socketId}')">
+                    받기
+                </a>
+            </td>`
+        ];
+
+        row.innerHTML = columns.join("\n");
+        table.appendChild(row);
+    });
+
+    // MP3 항목 추가
+    const mp3Row = document.createElement("tr");
+    mp3Row.className = "file-list";
+    mp3Row.innerHTML = `
+      <th>MP3 파일</th>
+      <td>mp3</td>
+      <td>서버 변환 후 다운</td>
+      <td>해당없음</td>
+      <td>
+        <a href="#" class="btn btn-outline-primary"
+           onclick="download_tube(0, 0, 0, 3, '${socketId}')">받기</a>
+      </td>
+    `;
+    table.appendChild(mp3Row);
+
+    toggleElement("table-area", true);
 }
 
-function hide_loading_img(){
-    // 로딩 이미지 숨기기
-    $('.loading').attr('hidden', true);
-}
 
-
-function show_youtube_info(thumbnail_url, title, duration){
-    // 유튜브 썸네일/제목 영역 보이기
-    $('#tube-info-area').attr('hidden', false);
-    $('#tube-thumbnail').attr('src', thumbnail_url);
-    $('#tube-title').text(`${title} (재생시간: ${duration})`);
-}
-
-
-function hide_youtube_info(){
-    // 유튜브 썸네일/제목 영역 감추기
-    $('#tube-info-area').attr('hidden', true);
-}
-
-function click_file_request_btn(){
-    let href = $('#request-file-btn').attr('href')
-    // console.log(`click_file_request_btn >>> ${href}`)
-    $('#request-file-btn').trigger('click');
+function typeMap(type) {
+    return { mp4: 1, m4a: 2, mp3: 3, optimal: 4 }[type] || 0;
 }

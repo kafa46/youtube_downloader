@@ -1,0 +1,352 @@
+{
+    "kind": "youtube#searchListResponse",
+    "etag": "VDQlELsZfZUaNA2vams17mnYfgI",
+    "nextPageToken": "CAoQAA",
+    "regionCode": "KR",
+    "pageInfo": {
+        "totalResults": 876821,
+        "resultsPerPage": 10
+    },
+    "items": [
+        {
+            "kind": "youtube#searchResult",
+            "etag": "2Hs-QP07x-SayJ2ynEI1PRTK4Zk",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "QtauXsOZmpI"
+            },
+            "snippet": {
+                "publishedAt": "2020-10-20T00:15:01Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "⚡동요연속듣기⚡ 유치원 인기 동요 | 아이들 시간순삭😋 | 1시간 연속재생 | 똑똑한 엄마들이 선택한 동요 베스트",
+                "description": "[유치원 인기 동요 모음] #동요연속듣기 #동요모음 #누리과정 ▷ 동요 연속 듣기 (240분) https://youtu.be/25AHhmBwkjc ▷ 한글을 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/QtauXsOZmpI/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/QtauXsOZmpI/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/QtauXsOZmpI/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2020-10-20T00:15:01Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "RbFJm-PAD4wVyWf1oV8XxwW5djA",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "H2X5hJ7sF-w"
+            },
+            "snippet": {
+                "publishedAt": "2024-09-19T23:00:10Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "❤️동요연속듣기💜 최신!!인기동요 모음 | 120분 연속재생 | 동물동요 | 똑똑키즈 | 유치원동요 | 어린이동요ㅣEducational Songs for Children",
+                "description": "똑똑키즈를 사랑해주셔서 감사합니다. 구독과 좋아요는 힘이 됩니다^^ [00:00:08] 참 좋은 말(김완기ㅣ장지원) [00:02:33] 엄마 아빠 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/H2X5hJ7sF-w/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/H2X5hJ7sF-w/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/H2X5hJ7sF-w/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2024-09-19T23:00:10Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "ayl5DeFnWa78X-2E1mSs5q-40dE",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "LXkET__T_2M"
+            },
+            "snippet": {
+                "publishedAt": "2023-06-09T23:00:10Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "🍅동요연속듣기🍅 최신!!인기동요 모음 | 120분 연속재생 | 동물동요 | 광고없는 | 똑똑키즈 | 유치원동요 | 어린이동요ㅣEducational Songs for Children",
+                "description": "똑똑키즈를 사랑해주셔서 감사합니다. 구독과 좋아요는 힘이 됩니다^^ [00:00:08] 멋쟁이 토마토(김영광ㅣ김영광) [00:01:28] 올챙이 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/LXkET__T_2M/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/LXkET__T_2M/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/LXkET__T_2M/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2023-06-09T23:00:10Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "UO7snPFTGDsccYilgZ6k0-2OEaI",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "VUiK51cZrMM"
+            },
+            "snippet": {
+                "publishedAt": "2022-12-27T06:30:03Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "🍅동요연속듣기🥦 최신! 인기동요 모음 | 120분 연속재생 | 동물동요 | 광고없는 | 똑똑키즈 | 유치원동요 | 어린이동요ㅣEducational Songs for Children",
+                "description": "똑똑키즈를 사랑해주셔서 감사합니다. 구독과 좋아요는 힘이 됩니다^^ ---------------------------------------------------------- 마음이 편해지는 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/VUiK51cZrMM/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/VUiK51cZrMM/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/VUiK51cZrMM/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2022-12-27T06:30:03Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "j-e2X5AhhzIaJ6B0f87FWFbrmkk",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "MnA3fWdOItA"
+            },
+            "snippet": {
+                "publishedAt": "2023-11-14T09:00:13Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "넌 할 수 있어 라고 말해주세요 🎶| 유치원동요 | 인기동요ㅣ우리 모두 할 수 있어요!",
+                "description": "똑똑키즈를 사랑해주셔서 감사합니다. 구독과 좋아요는 힘이 됩니다^^",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/MnA3fWdOItA/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/MnA3fWdOItA/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/MnA3fWdOItA/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2023-11-14T09:00:13Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "qdVAPX3Gg06nZDUIU-S24p7kUnc",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "T9yBEq9P6rQ"
+            },
+            "snippet": {
+                "publishedAt": "2022-08-23T23:00:10Z",
+                "channelId": "UCv8LawJRkCwaYndgy0nu60w",
+                "title": "예쁜동요 연속듣기💙 오늘 하루 감성 충전! 신나는동요부터 잔잔한 동요까지~ 동화 같은 이야기가 담긴 동요모음으로 아름다운 마음 가꿔요~🌷 광고없는동요 한시간! 키즈멜로디 창작동요",
+                "description": "동요작곡가와 함께 떠나는 동요여행✦✦ 키즈멜로디 동요 ✰구독✰ 좋아요✰ 부탁드려요 동화처럼 예쁜 동요 60분   00:01 네가 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/T9yBEq9P6rQ/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/T9yBEq9P6rQ/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/T9yBEq9P6rQ/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "키즈멜로디Kids Melody",
+                "liveBroadcastContent": "none",
+                "publishTime": "2022-08-23T23:00:10Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "jqBnJRH0Ynyv_M_AnYlSqbHHXeY",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "7fiNYETK0JU"
+            },
+            "snippet": {
+                "publishedAt": "2025-04-09T03:17:57Z",
+                "channelId": "UCmFZ_3aK7lbNr3kLQ-s9P5g",
+                "title": "[2시간 연속재생]🌈유치원에서 배우는 누리과정 인기동요 연속듣기🌈유치원 인기동요 율동동요 모음집 | 유아동요 율동동요 베스트 모음 | 유치원동요 | 어린이동요 | 유아동요",
+                "description": "누리과정 유치원 어린이집 인기동요 모음집 입니다 아이들의 바른 생활습관과 규칙을 즐겁게 동요를 부르며 배울 수 있습니다^^ ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/7fiNYETK0JU/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/7fiNYETK0JU/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/7fiNYETK0JU/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "Bebepop-베베팝",
+                "liveBroadcastContent": "none",
+                "publishTime": "2025-04-09T03:17:57Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "CKXEto-fSfQTz4uKUQTLmjKWppM",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "MH1HidODMvY"
+            },
+            "snippet": {
+                "publishedAt": "2025-01-27T23:00:26Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "🐥인기동요연속듣기🐥 최신!!인기동요 모음 | 120분 연속재생 | 동물동요 | 똑똑키즈 | 유치원동요 | 어린이동요ㅣEducational Songs for Children",
+                "description": "똑똑키즈를 사랑해주셔서 감사합니다. 구독과 좋아요는 힘이 됩니다^^ [00:00:08] 오리가족소풍(이지영ㅣ임수연) [00:02:23] 작은 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/MH1HidODMvY/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/MH1HidODMvY/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/MH1HidODMvY/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2025-01-27T23:00:26Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "8hyKbhEqQTBbFaR5i1NFvldTdMI",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "kehBiwtAR1g"
+            },
+            "snippet": {
+                "publishedAt": "2024-09-03T23:00:46Z",
+                "channelId": "UCDMbHxjACpyM0qigvBms_Vw",
+                "title": "😘유튜브 최고 인기동요 연속듣기 최신인기동요 모음 | 120분 연속재생 | 광고없는 | 똑똑키즈 | 유치원동요 | Educational Songs for Children",
+                "description": "똑똑키즈를 사랑해주셔서 감사합니다. 구독과 좋아요는 힘이 됩니다^^ [00:00:08] 비행기(외국곡ㅣ윤석중) [00:00:53] 나비야(미상ㅣ ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/kehBiwtAR1g/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/kehBiwtAR1g/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/kehBiwtAR1g/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "똑똑키즈 TokTok Kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2024-09-03T23:00:46Z"
+            }
+        },
+        {
+            "kind": "youtube#searchResult",
+            "etag": "w7s9kwJUh4XSZmOamgk9MKe4FBs",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "2OSQ_VYtQvM"
+            },
+            "snippet": {
+                "publishedAt": "2024-11-11T23:00:03Z",
+                "channelId": "UC5GmipdEuFEIxAqCJmbuhdA",
+                "title": "😍유아동요 인기동요 연속듣기😍유아동요 율동동요 베스트😍120분 연속재생 😍유아동요연속듣기  😍유치원 동요💖엄마가 들려주는 유아동요😍광고없는💗어린이동요🎵송송키즈🙂동요연속듣기😍율동동요",
+                "description": "안녕하세요 송송키즈 입니다 EBS교육방송 동요프로그램 출신의 아이들이 노래하는 동요채널입니다 아이들의 꿈과사랑을 노래하는 ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/2OSQ_VYtQvM/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/2OSQ_VYtQvM/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/2OSQ_VYtQvM/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "송송키즈 song song kids",
+                "liveBroadcastContent": "none",
+                "publishTime": "2024-11-11T23:00:03Z"
+            }
+        }
+    ]
+}

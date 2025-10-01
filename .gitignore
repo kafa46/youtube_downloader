@@ -1,7 +1,9 @@
-ven/
+venv/
 .vscode/
 __pycache__
 download/
 secret.py
 uwsgi/log
 uwsgi/pid
+data/
+migrations/

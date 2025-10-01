@@ -22,6 +22,12 @@
 
 ## History
 
+|Date|Topic|Description|
+|:--|:--|:--|
+|2023.03.25|Add traffic analysis|Count & check incomming request for system analysis & debugging|
+|2023.03.22|Bug fix|Fix download file name by removing special characters|
+|2023.03.15|Initial Release|Launch system with minimal functionality|
+
 ## References
 
 - Here is the table contianing all material we referenced.
